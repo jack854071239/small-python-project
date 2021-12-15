@@ -1,0 +1,61 @@
+import random
+
+
+def create_dictionary(filename):
+    file = open(filename, 'r')  # open file
+
+    text = file.read()  # read file
+    words = text.split()
+    file.close() # close file
+    d = {}
+    current_word = '$'
+    n = 0
+    for next_word in words:  # creating the dictionary
+
+        if current_word not in d:
+            d[current_word] = [next_word]
+
+        else:
+            d[current_word] += [next_word]
+
+        # update current_word...
+        n += 1
+        if next_word[-1] not in '.!?':
+
+            current_word = words[n - 1]
+        else:
+            current_word = '$'
+    print(d)
+
+    return d
+
+#word_dict = create_dictionary('sample.txt')
+
+
+def generate_text(word_dict,num_words):
+    #word_dict=create_dictionary(filename)
+
+    n=0
+    new_txt=''
+
+
+    for w in range(num_words):
+
+        if new_txt=='' or new_txt[-1] in '.?!':
+            next_word = '$'
+            next_word = random.choice(word_dict[next_word])
+            new_txt+=next_word+' '
+
+            #print(x)
+        if next_word in word_dict:
+            next_word = random.choice(word_dict[next_word])
+            new_txt+=next_word+' '
+
+        else:
+            next_word='$'
+            next_word = random.choice(word_dict[next_word])
+            new_txt += next_word + ' '
+
+
+    print(new_txt)
+
